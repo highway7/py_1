@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+
+{% load static %} <!-- New line -->
+
+<html>
+
+    <head>
+        <title>Rango</title>
+    </head>
+
+    <body>
+    {% if user.is_authenticated %}
+		<h1>Rango says... hello {{ user.username }}!</h1>
+	{% else %}
+		<h1>Rango says... hello world!</h1>
+	{% endif %}
+        
+        
+        {% if categories %}
+            <ul>
+                {% for category in categories %}
+                <li><a href="/rango_app/category/{{ category.url }}">{{ category.name }}</a></li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <strong>There are no categories present.</strong>
+        {% endif %}
+        
+        
+        {% if user.is_authenticated %}
+			<a href="/rango_app/restricted/">Restricted Page</a><br />
+			<a href="/rango_app/logout/">Logout</a><br />
+			{% else %}
+			<a href="/rango_app/register/">Register Here</a><br />
+			<a href="/rango_app/login/">Login</a><br />
+			{% endif %}
+			
+			<a href="/rango_app/about/">About</a><br/>
+			<a href="/rango_app/add_category/">Add a New Category</a><br />
+
+        <img src="{% static "flow.jpg" %}" alt="Picture of Rango" /> <!-- New line -->
+        
+    </body>
+
+</html>

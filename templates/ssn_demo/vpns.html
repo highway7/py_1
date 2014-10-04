@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+
+{% load static %} <!-- New line -->
+
+<html>
+
+	<head>
+	
+	    <title>Telus Self-Serve Network Portal - Demo</title>
+	
+	</head>
+
+    <body>
+	    {% if user.is_authenticated %}
+			<h1> Existing VPNs managed by {{ user.username }}:</h1>
+		{% else %}
+			<h1>sn_demo says... hello world!</h1>
+		{% endif %}
+	        
+	        
+	    {% if VPNS %}
+	        <ul>
+	           {% for vpn in VPNS %}
+	   	        <li><a href="/ssn_demo/vpn/{{ vpn.url }}"> {{ vpn }} </a></li>
+	           {% endfor %}
+	        </ul>
+	    {% else %}
+	        <strong>There are no vpns present.</strong>
+	    {% endif %}
+   
+        
+	    {% if user.is_authenticated %}
+	    	<h2>Add a new VPN</h2>
+		    <form action="/ssn_demo/add_vpn/" method="post">
+		       {% csrf_token %}
+			    <label for="vpn_name">Name of New VPN: </label>
+    			<input id="vpn_name" type="text" name="vpn_name" value="{{ current_name }}">
+    			<input type="submit" value="ADD">
+			</form>
+
+			<a href="/rango_app/restricted/">Restricted Page</a><br />
+			<a href="/rango_app/logout/">Logout</a><br />
+		{% else %}
+			<a href="/ssn_demo/register/">Register Here</a><br />
+			<a href="/ssn_demo/login/">Login</a><br />
+		{% endif %}
+			
+   </body>
+
+</html>
